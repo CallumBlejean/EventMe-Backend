@@ -1,0 +1,5 @@
+DROP DATABASE IF EXISTS event_me_test;
+DROP DATABASE IF EXISTS event_me;
+
+CREATE DATABASE event_me_test;
+CREATE DATABASE event_me;

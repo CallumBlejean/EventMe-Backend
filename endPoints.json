@@ -1,0 +1,217 @@
+{
+  "GET /api": {
+    "description": "Serves up a JSON representation of all the available endpoints of the API."
+  },
+  "GET /api/users": {
+    "description": "Returns an array of all users.",
+    "authentication": "Required (admin only)",
+    "response": {
+      "users": [
+        {
+          "user_id": 1,
+          "firebase_uid": "uid_abc",
+          "name": "John",
+          "email": "john@example.com",
+          "user_status": "admin"
+        }
+      ]
+    }
+  },
+  "GET /api/users/:user_id": {
+    "description": "Returns a user by their user ID.",
+    "authentication": "Required",
+    "response": {
+      "user": {
+        "user_id": 1,
+        "firebase_uid": "uid_abc",
+        "name": "John",
+        "email": "john@example.com",
+        "user_status": "admin"
+      }
+    }
+  },
+  "GET /api/users/email/:email": {
+    "description": "Returns a user by their email address.",
+    "authentication": "Required",
+    "response": {
+      "user": {
+        "user_id": 1,
+        "firebase_uid": "uid_abc",
+        "name": "John",
+        "email": "john@example.com",
+        "user_status": "admin"
+      }
+    }
+  },
+  "POST /api/users": {
+    "description": "Creates a new user in the database.",
+    "request body": {
+      "firebase_uid": "string (required)",
+      "name": "string (required)",
+      "email": "string (required)",
+      "user_status": "string (optional, defaults to 'active')"
+    },
+    "response": {
+      "user": {
+        "user_id": 5,
+        "firebase_uid": "uid_xyz",
+        "name": "New User",
+        "email": "new@example.com",
+        "user_status": "active"
+      }
+    }
+  },
+  "PATCH /api/users/:user_id": {
+    "description": "Updates an existing user's name, email, and user_status.",
+    "request body": {
+      "name": "string (required)",
+      "email": "string (required)",
+      "user_status": "string (required - one of 'active', 'admin', 'staff', 'banned')"
+    },
+    "response": {
+      "user": {
+        "user_id": 1,
+        "name": "Updated Name",
+        "email": "updated@example.com",
+        "user_status": "staff"
+      }
+    }
+  },
+  "DELETE /api/users/:user_id": {
+    "description": "Deletes a user by user ID.",
+    "response": {
+      "status": 204,
+      "message": "No content"
+    }
+  },
+  "PATCH /api/users/restrict/:user_id": {
+    "description": "Updates a user's status to 'banned'.",
+    "response": {
+      "user": {
+        "user_id": 2,
+        "user_status": "banned"
+      }
+    }
+  },
+  "GET /api/events": {
+    "description": "Returns an array of all events.",
+    "authentication": "Required",
+    "response": {
+      "events": [
+        {
+          "event_id": 1,
+          "title": "Event Title",
+          "description": "Details about the event",
+          "date": "2025-05-01",
+          "location": "City Park",
+          "created_by": "user_abc"
+        }
+      ]
+    }
+  },
+  "GET /api/events/:event_id": {
+    "description": "Returns a specific event by ID.",
+    "authentication": "Required",
+    "response": {
+      "event": {
+        "event_id": 1,
+        "title": "Event Title",
+        "description": "Details about the event",
+        "date": "2025-05-01",
+        "location": "City Park",
+        "created_by": "user_abc"
+      }
+    }
+  },
+  "GET /api/events/user/:user_id": {
+    "description": "Returns all events a specific user has joined.",
+    "authentication": "Required",
+    "response": {
+      "events": [
+        {
+          "event_id": 2,
+          "title": "Community Cleanup",
+          "description": "Help clean the local park",
+          "date": "2025-07-15",
+          "location": "Community Park"
+        }
+      ]
+    }
+  },
+  "POST /api/events": {
+    "description": "Creates a new event.",
+    "authentication": "Required (admin or staff only)",
+    "request body": {
+      "title": "string (required)",
+      "description": "string (required)",
+      "date": "date (required)",
+      "location": "string (required)"
+    },
+    "response": {
+      "event": {
+        "event_id": 2,
+        "title": "New Event",
+        "description": "Exciting stuff",
+        "date": "2025-06-10",
+        "location": "Downtown",
+        "created_by": "user_abc"
+      }
+    }
+  },
+  "DELETE /api/events/:event_id": {
+    "description": "Deletes an event by ID.",
+    "authentication": "Required (admin or staff only)",
+    "response": {
+      "status": 204,
+      "message": "No content"
+    }
+  },
+  "PATCH /api/events/:event_id": {
+  "description": "Updates an existing event's details.",
+  "authentication": "Required (admin or staff only)",
+  "request body": {
+    "title": "string (optional)",
+    "description": "string (optional)",
+    "date": "date (optional)",
+    "location": "string (optional)"
+  },
+  "response": {
+    "event": {
+      "event_id": 1,
+      "title": "Updated Title",
+      "description": "Updated details",
+      "date": "2025-05-01",
+      "location": "Updated Location",
+      "created_by": "user_abc"
+    }
+  }
+},
+  "GET /api/events/:event_id/members": {
+    "description": "Returns all users who have joined a specific event.",
+    "authentication": "Required",
+    "response": {
+      "members": [
+        {
+          "user_id": 3,
+          "name": "Alice",
+          "email": "alice@example.com"
+        }
+      ]
+    }
+  },
+  "POST /api/events/:event_id/members": {
+    "description": "Allows a user to join an event.",
+    "authentication": "Required",
+    "response": {
+      "msg": "Joined event successfully"
+    }
+  },
+  "DELETE /api/events/:event_id/members/:user_id": {
+    "description": "Removes a user from an event.",
+    "authentication": "Required (admin or staff only)",
+    "response": {
+      "status": 204,
+      "message": "No content"
+    }
+  }
+}
