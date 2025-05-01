@@ -24,12 +24,6 @@ const userData = [
     user_status: "banned",
   },
   {
-    firebase_uid: "UVM5NuBrqOUSOV63jJuX20269vi2",
-    name: "Callum",
-    email: "callumblejean@gmail.com",
-    user_status: "active",
-  },
-  {
     firebase_uid: "uid_005",
     name: "Sarah Lee",
     email: "sarah@example.com",
@@ -120,10 +114,22 @@ const userData = [
     user_status: "active",
   },
   {
-    firebase_uid: "tsFtZpuHGEOkyH2KGeQotxfsw2f2",
-    name: "Callum",
-    email: "cjstamper@gmail.com",
+    firebase_uid: "dlLFahQUKOgoDKEtyoljNg8lSrR2",
+    name: "Active Active",
+    email: "active@eventme.com",
+    user_status: "active",
+  },
+  {
+    firebase_uid: "ca9vu3YJvjVE9jF8ZvEwuGcKxv12",
+    name: "Staff Staff",
+    email: "staff@eventme.com",
     user_status: "staff",
+  },
+  {
+    firebase_uid: "uSKZVs3YF3f6SGpYtYa9okEIhFi2",
+    name: "Banned Banned",
+    email: "banned@eventme.com",
+    user_status: "banned",
   },
 ];
 module.exports = userData;

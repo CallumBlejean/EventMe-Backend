@@ -1,67 +1,50 @@
-EventMe Backend
-This is the backend for EventMe, a full-stack app that helps people find and join events.
+# EventMe Backend
 
-What it does
-Authentication
+This is the backend for **EventMe**, a web app that helps users discover, join, and manage events.
 
-Uses Firebase for verifying users
+## Features
 
-Each request must include a valid ID token to access protected routes
+- **Authentication**
+  - Uses Firebase to verify users
+  - Every protected route requires a valid ID token
+  - After token verification, the server retrieves the user’s ID and role from the database
 
-After verifying a Firebase token, the server fetches the user’s ID and role from the database
+- **Events**
+  - Users can browse all events or get details of a specific one
+  - Staff and admin users can create and delete events
+  - Users can join and leave events
+  - Member lists are tracked for each event
 
-Events
+- **User Roles**
+  - Each user has a status: `active`, `staff`, or `admin`
+  - Staff/admin users can remove others from events
+  - Only admins can remove another admin
 
-Users can get a list of all events
+- **Membership Handling**
+  - Stores which users are attending which events
+  - Prevents duplicate signups
+  - Users can leave events, or be removed by staff/admins
 
-Users can view individual event details
+## API Endpoints
 
-Staff and admin users can create and delete events
+All endpoints are prefixed with `/api` and require a `Bearer` token in the `Authorization` header.
 
-Users can join or leave events
+| Method | Endpoint                              | Description                                 |
+|--------|----------------------------------------|---------------------------------------------|
+| GET    | `/events`                              | Get all events                               |
+| GET    | `/events/:event_id`                    | Get details for a specific event             |
+| POST   | `/events`                              | Create a new event (staff/admin only)        |
+| DELETE | `/events/:event_id`                    | Delete an event (staff/admin only)           |
+| GET    | `/events/:event_id/members`            | Get attendees of an event                    |
+| POST   | `/events/:event_id/members`            | Join an event                                |
+| DELETE | `/events/:event_id/members/:user_id`   | Leave or remove a user from an event         |
+| GET    | `/events/user/:user_id`                | Get all events a user is signed up for       |
 
-The backend tracks who is attending which event
+## Tech Stack
 
-User Roles
+- **Node.js** with **Express**
+- **PostgreSQL** for data storage
+- **Firebase** for authentication
+- Hosted on **Render**
 
-Users can have a status of "banned", “active”, “staff”, or “admin”
-
-Staff and admins can remove users from events
-
-Only admins can remove other admins
-
-Membership Management
-
-Keeps a record of which users are part of which events
-
-Prevents users from joining the same event twice
-
-Allows users to leave events, or be removed if needed
-
-Endpoints
-All endpoints are under /api and require an Authorization token in the headers.
-
-GET /events: get all events
-
-POST /events: create a new event (staff/admin only)
-
-GET /events/:event_id: get details for a specific event
-
-DELETE /events/:event_id: delete an event (staff/admin only)
-
-GET /events/:event_id/members: get attendees of an event
-
-POST /events/:event_id/members: join an event
-
-DELETE /events/:event_id/members/:user_id: leave or remove someone from an event
-
-GET /events/user/:user_id: get all events a user is signed up for
-
-Tech stack
-Node.js with Express
-
-PostgreSQL for the database
-
-Firebase for authentication
-
-Hosted on Render
+**https://eventme-backend.onrender.com/api**
